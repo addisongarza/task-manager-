@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block title %}Task Manager{% endblock %}
+
+{% block content %}
+<div class="content">
+    <h1>Welcome to Your Task Manager</h1>
+    <p class="intro-text">Keep track of your daily tasks with ease. Add new tasks, mark them as complete, and delete tasks when you're done. Stay organized and productive!</p>
+
+    <!-- Task Form -->
+    <div class="form-container">
+        <h2>Add a New Task</h2>
+        <form method="post">
+            {{ form.hidden_tag() }}
+            <div>
+                {{ form.title.label }}
+                {{ form.title }}
+            </div>
+            <div>
+                {{ form.submit }}
+            </div>
+        </form>
+    </div>
+
+    <!-- Task List -->
+    <div class="task-list">
+        <h2>Your Tasks</h2>
+        {% if tasks %}
+            {% for task in tasks %}
+            <div class="task-card">
+                <div class="task-info">
+                    <!-- Interactive Task Icon (Placeholder GIF) -->
+                    <img src="{{ url_for('static', filename='checkmark.gif') }}" alt="Task Status" class="icon-animation">
+                    <p class="task-title">{{ task.title }}</p>
+                </div>
+                <div class="task-actions">
+                    <a href="{{ url_for('delete_task', task_id=task.id) }}" class="task-delete-btn">Delete</a>
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <p>No tasks yet. Add a new task above!</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+
+
